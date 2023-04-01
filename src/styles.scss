@@ -8,11 +8,13 @@ html {
 
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
 
   > section {
-    flex-basis: 50%;
+    flex-basis: 25%;
+    position: relative;
   }
 }

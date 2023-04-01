@@ -1,0 +1,21 @@
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > input[type='text'] {
+    min-height: 30px;
+    flex: 0 1 69%;
+    border: 2px solid gray;
+    border-radius: 4px;
+  }
+
+  app-map {
+    display: flex;
+    flex: 0 1 70.6%;
+  }
+}
+
+.map-container-row {
+  margin-top: 10px;
+}
