@@ -13,8 +13,3 @@ export const markerIcon = L.icon({
   shadowSize: [38, 38],
   shadowAnchor: [10, 25],
 });
-
-export const mapDefaultConfigue = L.map('map', {
-  center: [39.8282, -98.5795],
-  zoom: 3,
-});

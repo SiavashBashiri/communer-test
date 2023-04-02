@@ -1,7 +1,15 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import * as L from 'leaflet';
 import { markerIcon, tiles } from 'src/app/modules/data-store/consts/map.const';
-import { mapDefaultConfigue } from './../../../../consts/map.const';
 import { LocationModel } from './../../../../models/location.model';
 
 @Component({
@@ -9,8 +17,9 @@ import { LocationModel } from './../../../../models/location.model';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnChanges {
   @Input() location!: LocationModel;
+  @Input() isShowMap!: boolean;
   @Output() selectedLocation = new EventEmitter<number[]>();
 
   private layer!: L.Layer;
@@ -21,6 +30,14 @@ export class MapComponent implements AfterViewInit {
     this.selectLocation();
   }
 
+  ngOnChanges(): void {
+    if (!this.isShowMap) {
+      this.map.remove();
+      this.configureDefaultLocationMap();
+      tiles.addTo(this.map);
+    }
+  }
+
   private initializeMap(): void {
     this.configureDefaultLocationMap();
     if (this.location?.latlng?.length) this.configurePresetLocationMap();
@@ -28,7 +45,10 @@ export class MapComponent implements AfterViewInit {
   }
 
   private configureDefaultLocationMap(): void {
-    this.map = mapDefaultConfigue;
+    this.map = L.map('map', {
+      center: [39.8282, -98.5795],
+      zoom: 3,
+    });
   }
 
   private configurePresetLocationMap(): void {
