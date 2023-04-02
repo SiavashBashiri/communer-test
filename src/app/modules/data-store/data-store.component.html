@@ -1,13 +1,65 @@
 <main class="container">
-  <section>
-    <div class="form-row">
-      <label>Location name: </label>
-      <input type="text" />
-    </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSaveLocation()">
+    <header>Share Location</header>
 
-    <div class="form-row map-container-row">
-      <label>Location on map: </label>
-      <app-map></app-map>
+    <section>
+      <div class="form-row">
+        <label class="label">Location name: </label>
+        <input type="text" formControlName="name" />
+      </div>
+
+      <div class="form-row form-row-margin-top">
+        <label class="label">Location on map: </label>
+        <app-map
+          [location]="location"
+          (selectedLocation)="onSetLocationValue($event)"></app-map>
+      </div>
+
+      <div class="form-row form-row-margin-top">
+        <label class="label">Location type: </label>
+        <ng-select
+          class="custom"
+          placeholder="Please select ..."
+          formControlName="type"
+          [items]="locationTypes"
+          [searchable]="false"
+          [clearable]="false"
+          [closeOnSelect]="true"
+          bindValue="id"
+          bindLabel="value">
+        </ng-select>
+      </div>
+
+      <div class="form-row form-row-margin-top">
+        <label class="label">Logo: </label>
+        <label for="file-upload" class="custom-file-upload">
+          <img
+            *ngIf="!locationLogo; else locationImage"
+            src="assets/images/upload.png"
+            alt="defaultUploadImage" />
+
+          <ng-template #locationImage>
+            <img [src]="locationLogo" alt="uploadImage" />
+          </ng-template>
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          (change)="onProcessFile($event)" />
+      </div>
+    </section>
+
+    <div class="btn-container">
+      <button
+        class="cancel-btn"
+        type="button"
+        (click)="onCancelShareLocation()">
+        Cancel
+      </button>
+      <button class="save-btn" type="submit" (click)="onSaveLocation()">
+        Save
+      </button>
     </div>
-  </section>
+  </form>
 </main>

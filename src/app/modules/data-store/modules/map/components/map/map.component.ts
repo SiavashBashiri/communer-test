@@ -1,5 +1,8 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import * as L from 'leaflet';
+import { markerIcon, tiles } from 'src/app/modules/data-store/consts/map.const';
+import { mapDefaultConfigue } from './../../../../consts/map.const';
+import { LocationModel } from './../../../../models/location.model';
 
 @Component({
   selector: 'app-map',
@@ -7,50 +10,55 @@ import * as L from 'leaflet';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements AfterViewInit {
-  layer!: L.Layer;
+  @Input() location!: LocationModel;
+  @Output() selectedLocation = new EventEmitter<number[]>();
+
+  private layer!: L.Layer;
   private map!: L.Map;
 
-  private initMap(): void {
-    this.map = L.map('map', {
-      center: [39.8282, -98.5795],
-      zoom: 3,
-    });
-
-    const tiles = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        maxZoom: 18,
-        minZoom: 3,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }
-    );
-
-    tiles.addTo(this.map);
+  ngAfterViewInit(): void {
+    this.initializeMap();
     this.selectLocation();
   }
 
-  ngAfterViewInit(): void {
-    this.initMap();
+  private initializeMap(): void {
+    this.configureDefaultLocationMap();
+    if (this.location?.latlng?.length) this.configurePresetLocationMap();
+    tiles.addTo(this.map);
   }
 
-  private selectLocation() {
-    var myIcon = L.icon({
-      iconUrl: '/assets/images/location.png',
-      iconSize: [38, 38],
-      shadowUrl: '/assets/images/shadow.png',
-      shadowSize: [38, 38],
-      shadowAnchor: [10, 25],
-    });
+  private configureDefaultLocationMap(): void {
+    this.map = mapDefaultConfigue;
+  }
 
+  private configurePresetLocationMap(): void {
+    this.map.remove();
+    this.map = L.map('map', {
+      center: [this.location.latlng[0], this.location.latlng[1]],
+      zoom: 12,
+    });
+  }
+
+  private setMarker(): void {
+    if (this.location)
+      this.layer = L.marker(this.location.latlng, { icon: markerIcon }).addTo(this.map);
+  }
+
+  private checkMarkerExictancy(): void {
+    if (this.layer !== undefined) {
+      this.layer.remove();
+    }
+  }
+
+  private selectLocation(): void {
+    this.setMarker();
     this.map.on('click', e => {
-      if (this.layer !== undefined) {
-        this.layer.remove();
-      }
-      var coord = e.latlng;
-      var lat = coord.lat;
-      var lng = coord.lng;
-      this.layer = L.marker([lat, lng], { icon: myIcon }).addTo(this.map);
+      this.checkMarkerExictancy();
+      const coord = e.latlng;
+      const lat = coord.lat;
+      const lng = coord.lng;
+      this.layer = L.marker([lat, lng], { icon: markerIcon }).addTo(this.map);
+      this.selectedLocation.emit([lat, lng]);
     });
   }
 }

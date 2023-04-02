@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "assets/styles/ng-select.scss";
+
 body,
 html {
   margin: 0;
@@ -11,10 +13,25 @@ html {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 100vh;
 
-  > section {
-    flex-basis: 25%;
+  > form {
+    flex-basis: 35%;
     position: relative;
+    padding-bottom: 50px;
+    border: 2px solid powderblue;
+    border-radius: 4px;
+
+    > header {
+      color: white;
+      font-size: x-large;
+      background-color: powderblue;
+      padding: 22px 45px;
+      margin-bottom: 50px;
+    }
+
+    > section {
+      padding: 0 50px;
+    }
   }
 }
