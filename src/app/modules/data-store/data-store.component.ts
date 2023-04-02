@@ -23,7 +23,8 @@ export class DataStoreComponent implements OnInit {
   });
 
   location!: LocationModel;
-  locationLogo!: string;
+  locationLogo!: string | null;
+  isShowMap: boolean = true;
 
   constructor(private dataStoreService: DataStoreService) {}
 
@@ -35,6 +36,8 @@ export class DataStoreComponent implements OnInit {
   onCancelShareLocation(): void {
     this.formGroup.reset();
     this.dataStoreService.removeLocation();
+    this.locationLogo = null;
+    this.isShowMap = false;
   }
 
   onProcessFile(event: any) {
@@ -46,7 +49,6 @@ export class DataStoreComponent implements OnInit {
       this.formGroup.controls.file.setValue(event.target.result);
     };
     reader.readAsDataURL(file);
-
   }
 
   onSetLocationValue(e: any): void {
@@ -59,7 +61,7 @@ export class DataStoreComponent implements OnInit {
 
   private getLocation(): void {
     this.location = this.dataStoreService.getLocation();
-    this.locationLogo = this.location.file;
+    if (this.location) this.locationLogo = this.location.file;
   }
 
   private formPatchValues(): void {

@@ -12,6 +12,7 @@
         <label class="label">Location on map: </label>
         <app-map
           [location]="location"
+          [isShowMap]="isShowMap"
           (selectedLocation)="onSetLocationValue($event)"></app-map>
       </div>
 
