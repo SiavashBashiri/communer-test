@@ -1,11 +1,11 @@
-import { DataStoreComponent } from './modules/data-store/data-store.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DataStoreComponent,
+    component: AppComponent,
     loadChildren: () =>
       import('./modules/data-store/data-store.module').then(
         (m) => m.DataStoreModule

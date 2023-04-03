@@ -30,7 +30,6 @@ export class DataStoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocation();
-    this.formPatchValues();
   }
 
   onCancelShareLocation(): void {
@@ -51,8 +50,8 @@ export class DataStoreComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onSetLocationValue(e: any): void {
-    this.formGroup.controls.latlng.setValue(e);
+  onSetLocationValue(event: any): void {
+    this.formGroup.controls.latlng.setValue(event);
   }
 
   onSaveLocation(): void {
@@ -61,7 +60,10 @@ export class DataStoreComponent implements OnInit {
 
   private getLocation(): void {
     this.location = this.dataStoreService.getLocation();
-    if (this.location) this.locationLogo = this.location.file;
+    if (this.location) {
+      this.locationLogo = this.location.file;
+      this.formPatchValues();
+    }
   }
 
   private formPatchValues(): void {

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataStoreRoutingModule } from './data-store-routing.module';
 import { DataStoreComponent } from './data-store.component';
-import { MapModule } from './modules/map/map.module';
+import { MapModule } from '../../shared/modules/map/map.module';
 
 @NgModule({
   declarations: [DataStoreComponent],
