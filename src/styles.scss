@@ -18,20 +18,20 @@ html {
   > form {
     flex-basis: 35%;
     position: relative;
-    padding-bottom: 50px;
-    border: 2px solid powderblue;
-    border-radius: 4px;
+    padding-bottom: $padding-5;
+    border: $border-size solid $primary-color;
+    border-radius: $border-radius-sm;
 
     > header {
-      color: white;
-      font-size: x-large;
-      background-color: powderblue;
-      padding: 22px 45px;
-      margin-bottom: 50px;
+      color: $white-color;
+      font-size: $font-size-lg;
+      background-color: $primary-color;
+      padding: $padding-3 $padding-4;
+      margin-bottom: $margin-5;
     }
 
     > section {
-      padding: 0 50px;
+      padding: 0 $padding-5;
     }
   }
 }

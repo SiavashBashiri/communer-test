@@ -1,9 +1,6 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
-// .ng-dropdown-panel.ng-select-bottom {
-//   border: 2px solid gray;
-// }
+@import "./variables";
 
 .ng-select.ng-select-single .ng-select-container {
-  border: 2px solid gray;
+  border: $border-size solid $gray-color;
 }
