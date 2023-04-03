@@ -7,6 +7,7 @@
 
   > .label {
     width: $label-width;
+    font-size: $font-size-sm;
   }
 
   > input[type='text'] {
@@ -14,6 +15,9 @@
     flex: 1;
     border: $border-size solid $gray-color;
     border-radius: $border-radius-sm;
+    font-family: 'Roboto Mono';
+    font-size: $font-size-base;
+    padding-left: $padding-2;
   }
 
   app-map {
@@ -66,6 +70,7 @@ input[type='file'] {
     border: 0;
     margin-top: $margin-1;
     margin-left: $margin-1;
+    font-size: $font-size-base;
     cursor: pointer;
   }
 
@@ -77,6 +82,7 @@ input[type='file'] {
     border-radius: $border-radius-sm;
     border: 0;
     margin-top: $margin-1;
+    font-size: $font-size-base;
     cursor: pointer;
   }
 }

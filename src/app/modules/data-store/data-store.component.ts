@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AppToastService } from 'src/app/shared/services/app-toast.service';
 import { LocationModel } from './models/location.model';
 import { DataStoreService } from './services/utilities/data-store.service';
 
@@ -26,7 +27,7 @@ export class DataStoreComponent implements OnInit {
   locationLogo!: string | null;
   isShowMap: boolean = true;
 
-  constructor(private dataStoreService: DataStoreService) {}
+  constructor(private dataStoreService: DataStoreService, private appToastService: AppToastService) {}
 
   ngOnInit(): void {
     this.getLocation();
@@ -55,7 +56,11 @@ export class DataStoreComponent implements OnInit {
   }
 
   onSaveLocation(): void {
-    if (this.formGroup.valid) this.dataStoreService.saveLocation(this.formGroup.value);
+    if (this.formGroup.valid) {
+      this.dataStoreService.saveLocation(this.formGroup.value);
+      this.appToastService.success('', 'Location Saved successfuly!');
+    } else this.appToastService.error('', 'All Inputs Are Requiered!');
+
   }
 
   private getLocation(): void {
